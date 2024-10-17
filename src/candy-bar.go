@@ -1,10 +1,24 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"slices"
+)
 
 type CandyBar struct {
 	name string
 	ingredients []string
+	bitmask int
+}
+
+func getBitmask(candyBar CandyBar, headers []string) int {
+	bitmask := 0
+	for i, v := range headers {
+		if slices.Contains(candyBar.ingredients, v) {
+			bitmask = bitmask | (1 << i - 1)
+		}
+	}
+	return bitmask
 }
 
 func getIngredients(record []string, headers []string) []string {
@@ -22,8 +36,9 @@ func fromCsv(records [][]string) []CandyBar {
 	fmt.Println(headers)
 	candyBars := []CandyBar {}
 	for _, v := range records[1:] {
-		candyBars = append(candyBars, CandyBar{ name: v[0], ingredients: getIngredients(v, headers) })
-		// fmt.Printf("Record %d %s\n", i, v[0])
+		candyBar := CandyBar{ name: v[0], ingredients: getIngredients(v, headers) }
+		candyBar.bitmask = getBitmask(candyBar, headers)
+		candyBars = append(candyBars, candyBar)
 	}
 	return candyBars
 }
