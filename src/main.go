@@ -9,8 +9,6 @@ func main() {
 	fmt.Printf("found %d records\n",  len(csvRecords))
 	candyBars := fromCsv(csvRecords)
 	forest := constructForest(candyBars)
-	for _, node := range forest {
-		printNode(node)
-	}
+	printForest(forest)
 	// fmt.Println(forest)
 }

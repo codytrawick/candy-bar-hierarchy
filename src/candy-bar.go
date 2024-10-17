@@ -15,7 +15,7 @@ func getBitmask(candyBar CandyBar, headers []string) int {
 	bitmask := 0
 	for i, v := range headers {
 		if slices.Contains(candyBar.ingredients, v) {
-			bitmask = bitmask | (1 << i - 1)
+			bitmask = bitmask | (2 << (i - 1))
 		}
 	}
 	return bitmask
