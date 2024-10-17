@@ -10,7 +10,7 @@ func main() {
 	candyBars := fromCsv(csvRecords)
 	forest := constructForest(candyBars)
 	for _, node := range forest {
-		fmt.Println(node)
+		printNode(node)
 	}
 	// fmt.Println(forest)
 }

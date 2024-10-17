@@ -1,13 +1,14 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
+	"strings"
 )
 
 type Node struct {
 	bitmask int
 	ingredients []string
-	candyBars []
+	candyBars []string
 	children []Node
 }
 
@@ -17,16 +18,15 @@ func compare(a int, b int) bool {
 
 func constructForest(candyBars []CandyBar) []Node {
 	forest := []Node {}
+	// First pass to consolidate nodes
 	for i, candyBar := range candyBars {
 	  index := contains(forest, candyBar.bitmask)
 		if index == -1 {
-			forest = append(forest, Node{ bitmask: candyBar.bitmask, ingredients: candyBar.ingredients, candyBars: []CandyBar { candyBars[i] }})
+			forest = append(forest, Node{ bitmask: candyBar.bitmask, ingredients: candyBar.ingredients, candyBars: []string { candyBars[i].name }})
 		} else {
-			// fmt.Printf("match %s\n", candyBar.name)
 			match := forest[index]
-			match.candyBars = append(match.candyBars, candyBars[i])
+			match.candyBars = append(match.candyBars, candyBars[i].name)
 			forest[index] = match
-			// fmt.Println(match)
 		}
 	}
 	return forest
@@ -39,4 +39,8 @@ func contains(nodes []Node, element int) int {
 		}
 	}
 	return -1
+}
+
+func printNode(node Node) {
+	fmt.Printf("- %s and %d children\n", strings.Join(node.candyBars[:], ", "), len(node.children))
 }

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"slices"
 )
 
@@ -33,7 +33,7 @@ func getIngredients(record []string, headers []string) []string {
 
 func fromCsv(records [][]string) []CandyBar {
 	headers := records[0]
-	fmt.Println(headers)
+	// fmt.Println(headers)
 	candyBars := []CandyBar {}
 	for _, v := range records[1:] {
 		candyBar := CandyBar{ name: v[0], ingredients: getIngredients(v, headers) }
