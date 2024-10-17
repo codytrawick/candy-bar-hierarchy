@@ -5,6 +5,8 @@ import (
 )
 
 func main() {
-	records := readCsvFile("../candy-bars.csv")
-	fmt.Println(records)
+	csvRecords := readCsvFile("../candy-bars.csv")
+	fmt.Printf("found %d records\n",  len(csvRecords))
+	candyBars := fromCsv(csvRecords)
+	fmt.Println(candyBars)
 }
