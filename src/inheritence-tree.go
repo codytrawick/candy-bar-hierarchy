@@ -20,6 +20,16 @@ func lessThan(a int, b int) bool {
 func constructForest(candyBars []CandyBar) []Node {
 	forest := consolidateEquivalentNodes(candyBars)
 
+	forest = pruneForest(forest)
+	for i, node := range forest {
+		if len(node.children) > 0 {
+			forest[i].children = pruneForest(node.children)
+		}
+	}
+	return forest
+}
+
+func pruneForest(forest []Node) []Node {
 	searchIndex := 0
 	for true {
 		if searchIndex == len(forest) {
@@ -29,21 +39,11 @@ func constructForest(candyBars []CandyBar) []Node {
 		found := false
 		for i, node := range forest {
 			if lessThan(node.bitmask, first.bitmask) {
-				// fmt.Println("\n---")
-				// fmt.Printf("Search index %d\n", searchIndex)
-				// fmt.Println("Found match: %s", node)
-				// printForest(forest)
 				match := forest[i]
 				match.children = append(match.children, first)
 				forest[i] = match
 				if searchIndex == 0 {
-					// fmt.Println("Before")
-					// printForest(forest)
 					forest = forest[1:]
-					// fmt.Println("After")
-					// printForest(forest)
-
-					// fmt.Println("")
 				} else {
 					forest = append(forest[:searchIndex], forest[searchIndex+1:]...)
 				}
@@ -58,7 +58,6 @@ func constructForest(candyBars []CandyBar) []Node {
 		}
 	}
 
-	// fmt.Printf("Less than %t\n", lessThan(forest[1].bitmask, forest[0].bitmask))
 	return forest
 }
 
