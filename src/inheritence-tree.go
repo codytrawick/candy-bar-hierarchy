@@ -77,6 +77,27 @@ func consolidateEquivalentNodes(candyBars []CandyBar) []Node {
 	return forest
 }
 
+func newIngredients(ingredients []string, seenIngredients []string) []string {
+	newElements := []string {}
+	for _, ingredient := range ingredients {
+		if containsIngredient(seenIngredients, ingredient) > -1 {
+			continue;
+		}
+		newElements = append(newElements, ingredient)
+	}
+	return newElements
+}
+
+
+func containsIngredient(ingredients []string, element string) int {
+	for i, node := range ingredients {
+		if node == element {
+			return i
+		}
+	}
+	return -1
+}
+
 func contains(nodes []Node, element int) int {
 	for i, node := range nodes {
 		if node.bitmask == element {
@@ -88,13 +109,13 @@ func contains(nodes []Node, element int) int {
 
 func printForest(forest []Node) {
 	for _, node := range forest {
-		printNode(node, 0)
+		printNode(node, 0, []string {})
 	}
 }
 
-func printNode(node Node, depth int) {
-	fmt.Printf("%s- %s with %d ingredients\n", strings.Repeat(" ", depth), strings.Join(node.candyBars[:], ", "), len(node.ingredients))
+func printNode(node Node, depth int, parentIngredients []string) {
+	fmt.Printf("%s- %s with %s\n", strings.Repeat(" ", depth), strings.Join(node.candyBars[:], ", "), strings.Join(newIngredients(node.ingredients, parentIngredients), ", "))
 	for _, child := range node.children {
-		printNode(child, depth + 2)
+		printNode(child, depth + 2, node.ingredients)
 	}
 }
