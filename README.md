@@ -16,6 +16,6 @@ Navigate to the src directory
 Run the program with go
 ```
 git clone git@github.com:codytrawick/candy-bar-hierarchy.git
-cd candy-bar-hierarchy
+cd candy-bar-hierarchy/src
 go run .
 ```
