@@ -6,10 +6,11 @@ For a, b in CandyBar, a < b if all ingredients in a are present in b.
 
 ## Run Instructions
 
-Install Go
+Install Dependencies (Go)
 ```
 brew install go
 ```
+Make sure go is present on your path
 
 Navigate to the src directory
 Run the program with go
